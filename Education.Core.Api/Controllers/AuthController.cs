@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Education.Core.Common.Dtos.Requests.Security;
+using Education.Core.Common.Dtos.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SpAuth.Api.Dto;
@@ -17,6 +19,9 @@ namespace SpAuth.Api.Controllers
         public static User user = new User();
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
+
+        //Services 
+        private readonly ISecurityService _securityService;
 
         public AuthController(IConfiguration configuration, IUserService userService)
         {
@@ -42,28 +47,28 @@ namespace SpAuth.Api.Controllers
         }
 
 
-        //// POST api/security/web/login
-        //[HttpPost("web/login")]
-        //[AllowAnonymous]
-        //public async Task<ActionResult<WebLoginResponseDto>> LoginWebAsync([FromBody] WebUserLoginRequestDto request)
-        //{
-        //    if (string.IsNullOrEmpty(request.Password) || string.IsNullOrEmpty(request.Username))
-        //        return Unauthorized("Please fill required fields");
+        // POST api/security/web/login
+        [HttpPost("web/login")]
+        [AllowAnonymous]
+        public async Task<ActionResult<WebLoginResponseDto>> LoginWebAsync([FromBody] WebUserLoginRequestDto request)
+        {
+            if (string.IsNullOrEmpty(request.PassWord) || string.IsNullOrEmpty(request.UserName))
+                return Unauthorized("Please fill required fields");
 
-        //    var userAuthData = await _securityService.GetWebUserAuthDataByCredentialsAsync(request);
+            var userAuthData = await _securityService.GetWebUserAuthDataByCredentialsAsync(request);
 
-        //    if (!userAuthData.IsAuthenticated)
-        //        return Unauthorized("Invalid credentials");
+            //if (!userAuthData.IsAuthenticated)
+            //    return Unauthorized("Invalid credentials");
 
-        //    var accessToken = _tokenService.GetWebAccessToken(userAuthData);
+            //var accessToken = _tokenService.GetWebAccessToken(userAuthData);
 
-        //    var response = new WebLoginResponseDto()
-        //    {
-        //        AccessToken = accessToken,
-        //        UserId = userAuthData.UserId
-        //    };
-        //    return Ok(response);
-        //}
+            //var response = new WebLoginResponseDto()
+            //{
+            //    AccessToken = accessToken,
+            //    UserId = userAuthData.UserId
+            //};
+            return Ok();
+        }
 
 
 

@@ -1,4 +1,4 @@
-﻿namespace Education.Core.Common
+﻿namespace Education.Core.DALL
 {
     public class Class1
     {
