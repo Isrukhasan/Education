@@ -41,6 +41,33 @@ namespace SpAuth.Api.Controllers
             return Ok(user);
         }
 
+
+        //// POST api/security/web/login
+        //[HttpPost("web/login")]
+        //[AllowAnonymous]
+        //public async Task<ActionResult<WebLoginResponseDto>> LoginWebAsync([FromBody] WebUserLoginRequestDto request)
+        //{
+        //    if (string.IsNullOrEmpty(request.Password) || string.IsNullOrEmpty(request.Username))
+        //        return Unauthorized("Please fill required fields");
+
+        //    var userAuthData = await _securityService.GetWebUserAuthDataByCredentialsAsync(request);
+
+        //    if (!userAuthData.IsAuthenticated)
+        //        return Unauthorized("Invalid credentials");
+
+        //    var accessToken = _tokenService.GetWebAccessToken(userAuthData);
+
+        //    var response = new WebLoginResponseDto()
+        //    {
+        //        AccessToken = accessToken,
+        //        UserId = userAuthData.UserId
+        //    };
+        //    return Ok(response);
+        //}
+
+
+
+
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
