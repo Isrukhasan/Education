@@ -1,9 +1,6 @@
-﻿using Education.Core.Common.Dtos.Requests.Security;
-using Education.Core.Common.Dtos.User;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using SpAuth.Api.Dto;
 using SpAuth.Api.Entity;
 using SpAuth.Api.Services.UserService;
 using System.IdentityModel.Tokens.Jwt;
@@ -20,8 +17,6 @@ namespace SpAuth.Api.Controllers
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
 
-        //Services 
-        private readonly ISecurityService _securityService;
 
         public AuthController(IConfiguration configuration, IUserService userService)
         {
@@ -36,60 +31,37 @@ namespace SpAuth.Api.Controllers
             return Ok(userName);
         }
 
-        [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(UserDto request)
-        {
-            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-            user.Username = request.Username;
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-            return Ok(user);
-        }
-
-
-        // POST api/security/web/login
-        [HttpPost("web/login")]
-        [AllowAnonymous]
-        public async Task<ActionResult<WebLoginResponseDto>> LoginWebAsync([FromBody] WebUserLoginRequestDto request)
-        {
-            if (string.IsNullOrEmpty(request.PassWord) || string.IsNullOrEmpty(request.UserName))
-                return Unauthorized("Please fill required fields");
-
-            var userAuthData = await _securityService.GetWebUserAuthDataByCredentialsAsync(request);
-
-            //if (!userAuthData.IsAuthenticated)
-            //    return Unauthorized("Invalid credentials");
-
-            //var accessToken = _tokenService.GetWebAccessToken(userAuthData);
-
-            //var response = new WebLoginResponseDto()
-            //{
-            //    AccessToken = accessToken,
-            //    UserId = userAuthData.UserId
-            //};
-            return Ok();
-        }
+        //[HttpPost("register")]
+        //public async Task<ActionResult<User>> Register(UserDto request)
+        //{
+        //    CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+        //    user.Username = request.Username;
+        //    user.PasswordHash = passwordHash;
+        //    user.PasswordSalt = passwordSalt;
+        //    return Ok(user);
+        //}
 
 
 
 
-        [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(UserDto request)
-        {
-            if (user.Username != request.Username)
-            {
-                return BadRequest("User not found.");
-            }
 
-            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
-            {
-                return BadRequest("Wrong password.");
-            }
-            string token = CreateToken(user);
-            var refreshToken = GenerateRefreshToken();
-            SetRefreshToken(refreshToken);
-            return Ok(token);
-        }
+        //[HttpPost("login")]
+        //public async Task<ActionResult<string>> Login(UserDto request)
+        //{
+        //    if (user.Username != request.Username)
+        //    {
+        //        return BadRequest("User not found.");
+        //    }
+
+        //    if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+        //    {
+        //        return BadRequest("Wrong password.");
+        //    }
+        //    string token = CreateToken(user);
+        //    var refreshToken = GenerateRefreshToken();
+        //    SetRefreshToken(refreshToken);
+        //    return Ok(token);
+        //}
 
         [HttpPost("refresh-token")]
         public async Task<ActionResult<string>> RefreshToken()

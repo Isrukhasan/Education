@@ -1,4 +1,5 @@
-﻿using Education.Core.BLL.Interfaces;
+﻿using Education.Core.Api.Services.Security.Auth;
+using Education.Core.BLL.Interfaces;
 using Education.Core.Common.Dtos.Requests.Security;
 using Education.Core.Common.Dtos.User;
 using Microsoft.AspNetCore.Authorization;
@@ -19,12 +20,16 @@ namespace SpAuth.Api.Controllers
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
         private readonly ISecurityService _securityService;
+        private readonly ITokenService _tokenService;
 
 
-        public SecurityController(IConfiguration configuration, IUserService userService)
+        public SecurityController(IConfiguration configuration,
+            IUserService userService, ISecurityService securityService, ITokenService tokenService)
         {
             _configuration = configuration;
             _userService = userService;
+            _securityService = securityService;
+            _tokenService = tokenService;
         }
 
         [HttpGet, Authorize]
@@ -58,13 +63,13 @@ namespace SpAuth.Api.Controllers
             if (!userAuthData.IsAuthenticated)
                 return Unauthorized("Invalid credentials");
 
-            //var accessToken = _tokenService.GetWebAccessToken(userAuthData);
+            var accessToken = _tokenService.GetWebAccessToken(userAuthData);
 
-            //var response = new WebLoginResponseDto()
-            //{
-            //    AccessToken = accessToken,
-            //    UserId = userAuthData.UserId
-            //};
+            var response = new WebLoginResponseDto()
+            {
+                AccessToken = accessToken,
+                UserId = userAuthData.UserId
+            };
             return Ok();
         }
 
