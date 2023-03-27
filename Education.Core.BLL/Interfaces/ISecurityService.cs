@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Education.Core.Common.Dtos.Requests.Security;
+using Education.Core.Common.Dtos.User;
 
 namespace Education.Core.BLL.Interfaces
 {
-    internal interface ISecurityService
+    public interface ISecurityService
     {
+        Task<WebUserAuthDataDto> GetWebUserAuthDataByCredentialsAsync(WebUserLoginRequestDto request);
     }
 }

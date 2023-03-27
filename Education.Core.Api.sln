@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Education.Core.Api", "Educa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Education.Core", "Education.Core", "{A48E7A87-744B-4766-A9CE-CA38DCA9F6A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Education.Core.BLL", "Education.Core.BLL\Education.Core.BLL.csproj", "{4B5EE4CD-33CA-494B-B4AD-86985069E5D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Education.Core.BLL", "Education.Core.BLL\Education.Core.BLL.csproj", "{4B5EE4CD-33CA-494B-B4AD-86985069E5D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Education.Core.DALL", "Education.Core.DALL\Education.Core.DALL.csproj", "{6DDCB2C5-6239-4A45-858D-26EE5F92B44B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Education.Core.DALL", "Education.Core.DALL\Education.Core.DALL.csproj", "{6DDCB2C5-6239-4A45-858D-26EE5F92B44B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
